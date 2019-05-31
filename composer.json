@@ -1,0 +1,104 @@
+{
+	"name": "edsongti/lando_phpunit",
+  "description": "Lando and phpunit for Drupal 8",
+  "authors": [
+    {
+      "name": "Edson Carlos de Oliveira",
+      "email": "edsoncarlosgti@gmail.com"
+    }
+  ],
+	"license": "MIT",
+	"type": "project",
+	"repositories": [
+		{
+				"type": "composer",
+				"url": "https://packages.drupal.org/8"
+		},
+		{
+				"type": "composer",
+				"url": "https://asset-packagist.org"
+		}
+	],
+	"config": {
+        "bin-dir": "bin",
+        "sort-packages": true
+	},
+	"require": {
+		"composer/installers": "^1.0.20",
+		"cweagans/composer-patches": "~1.0",
+		"drupal-composer/drupal-scaffold": "^2.0.1",
+		"drupal/bootstrap": "3.17.0",
+		"drupal/console": "~1.0",
+		"drupal/graphql": "^3.0@RC",
+		"drupal/paragraphs": "^1.8",
+		"drupal/tablefield": "2.0-alpha1",
+		"drush/drush": "^9.0"
+  },
+	"require-dev": {
+		"drupal/coder": "^8.3",
+		"drupal/config_profile": "^1.0@RC",
+		"drush/drush": "^9.0",
+		"drupal/drush_help": "^1.0",
+		"drupal/devel": "^1.2",
+		"drupal/field_name_prefix_remove": "1.x-dev",
+		"drupal/stage_file_proxy": "^1.0",
+		"grasmash/yaml-cli": "^1.0",
+		"pear/http_request2": "2.3.0",
+		"phing/phing": "~2.16",
+		"phpunit/phpunit": "6.*",
+		"webflo/drupal-finder": "^1.0.0",
+		"webmozart/path-util": "^2.3",
+		"symfony/css-selector": "~2.8"
+	},
+	"minimum-stability": "dev",
+	"prefer-stable": true,
+	"scripts": {
+			"drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
+			"post-install-cmd": [
+					"DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
+					"@composer drupal-scaffold",
+					"rm -rf docroot/core/config/install/system.theme.yml"
+			],
+			"post-update-cmd": [
+					"DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
+					"rm -rf docroot/core/config/install/system.theme.yml"
+			]
+	},
+	"extra": {
+			"installer-paths": {
+					"docroot/core": [
+							"type:drupal-core"
+					],
+					"docroot/modules/contrib/{$name}": [
+							"type:drupal-module"
+					],
+					"docroot/profiles/contrib/{$name}": [
+							"type:drupal-profile"
+					],
+					"docroot/themes/contrib/{$name}": [
+							"type:drupal-theme"
+					],
+					"drush/contrib/{$name}": [
+							"type:drupal-drush"
+					],
+					"docroot/modules/custom/{$name}": [
+							"type:drupal-custom-module"
+					],
+					"docroot/profiles/custom/{$name}": [
+							"type:drupal-custom-profile"
+					],
+					"docroot/themes/custom/{$name}": [
+							"type:drupal-custom-theme"
+					],
+					"docroot/libraries/{$name}": [
+							"type:drupal-library"
+					]
+			},
+			"drupal-scaffold": {
+					"excludes": [
+							".htaccess"
+					]
+			},
+			"enable-patching": true
+	}
+}
