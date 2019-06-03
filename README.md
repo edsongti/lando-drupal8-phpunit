@@ -1,5 +1,4 @@
 # lando-drupal8-phpunit
-Lando, Drupal8 and PHPUnit
 
 Install Git, Docker and Lando
 
