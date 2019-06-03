@@ -28,14 +28,15 @@
 		"cweagans/composer-patches": "~1.0",
 		"drupal-composer/drupal-scaffold": "^2.0.1",
 		"drupal/bootstrap": "3.17.0",
+		"drupal/coder": "^8.3",
 		"drupal/console": "~1.0",
 		"drupal/graphql": "^3.0@RC",
 		"drupal/paragraphs": "^1.8",
 		"drupal/tablefield": "2.0-alpha1",
-		"drush/drush": "^9.0"
-  },
+		"drush/drush": "^9.0",
+		"phpunit/phpunit": "^8.1"
+	},
 	"require-dev": {
-		"drupal/coder": "^8.3",
 		"drupal/config_profile": "^1.0@RC",
 		"drush/drush": "^9.0",
 		"drupal/drush_help": "^1.0",
@@ -45,7 +46,6 @@
 		"grasmash/yaml-cli": "^1.0",
 		"pear/http_request2": "2.3.0",
 		"phing/phing": "~2.16",
-		"phpunit/phpunit": "6.*",
 		"webflo/drupal-finder": "^1.0.0",
 		"webmozart/path-util": "^2.3",
 		"symfony/css-selector": "~2.8"
