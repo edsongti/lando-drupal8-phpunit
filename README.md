@@ -11,3 +11,6 @@ run
 - lando composer install
 - lando start
 - lando install
+
+Now, do your code and unit test cases and just run the follow command to run PHPUnit:
+- lando phpunit path_to_folder_or_file
