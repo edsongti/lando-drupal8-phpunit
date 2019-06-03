@@ -10,3 +10,4 @@ run
 - git pull origin master
 - lando composer install
 - lando start
+- lando install
