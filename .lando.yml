@@ -1,25 +1,15 @@
-name: lando_with_phpunit
+name: lando-d8-phpunit
 recipe: drupal8
 config:
   php: '7.2'
   via: nginx
   webroot: docroot
-  drush: composer
-  database: mysql:5.7
+  drush: 9
+  database: mariadb
   xdebug: true
   conf:
     php: .vscode/php.ini
-events:
-  post-install:
-    - appserver: cd $LANDO_WEBROOT && drush sql-drop --yes 
-    - appserver: cd $LANDO_WEBROOT && drush si --db-url=mysql://drupal8:drupal8@database:3306/drupal8 --locale='en' --site-name='D8 and TDD' --site-mail='admin@example.com' --account-name='admin' --account-mail='admin@example.com' --account-pass='admin' --yes
-  post-devel:
-    - appserver: cd $LANDO_WEBROOT && drupal site:mode dev
-    - appserver: cd $LANDO_WEBROOT && drupal moi devel webprofiler
-  post-update:
-    - appserver: cd $LANDO_MOUNT && composer update
-    - appserver: cd $LANDO_WEBROOT && drupal updb
-    - appserver: cd $LANDO_WEBROOT && drupal upe
+
 services:
   appserver:
     build:
@@ -29,10 +19,13 @@ services:
       - "/app/vendor/squizlabs/php_codesniffer/bin/phpcs --config-set installed_paths /app/vendor/drupal/coder/coder_sniffer"
     config:
       http: config/nginx.conf
+
 tooling:
   install:
     description: Install Application
-    cmd: true
+    cmd:
+      - cd $LANDO_WEBROOT && drush sql-drop --yes 
+      - cd $LANDO_WEBROOT && drush si --db-url=mysql://drupal8:drupal8@database:3306/drupal8 --locale='en' --site-name='D8 and TDD' --site-mail='admin@example.com' --account-name='admin' --account-mail='admin@example.com' --account-pass='admin' --yes
     service: appserver
   phpcs:
     service: appserver
@@ -41,13 +34,3 @@ tooling:
   phpunit:
     service: appserver
     cmd: vendor/bin/phpunit
-  devel:
-    description: Enable devel systems
-    cmd: true
-    service: appserver
-  update:
-    description: Update Application
-    cmd: true
-    service: appserver
-  node:
-    service: node

@@ -7,6 +7,7 @@ docroot/modules/contrib
 docroot/themes/contrib
 docroot/profiles/contrib
 docroot/libraries
+console/
 
 # Ignore Drupal Scaffold
 docroot/*.*
