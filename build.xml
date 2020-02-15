@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="D8LandoPHPUnit" default="env">
+  <property name="drush" value="${project.basedir}/bin/drush" />
+  <property name="web" value="docroot" />
+  <property name="site" value="${web}/sites/default" />
+  <property name="version" value="HEAD" />
+
+  <!-- Finds Composer, NPM, and rsync. -->
+  <target name="env">
+    <if>
+      <not>
+        <available file="${drush}" property="drush.exists" />
+      </not>
+      <then>
+        <exec command="which drush" outputProperty="drush" />
+      </then>
+    </if>
+    <exec command="which composer" outputProperty="composer" />
+    <exec command="which npm" outputProperty="npm" />
+    <exec command="which rsync" outputProperty="rsync" />
+
+    <echo message="Found Drush: ${drush}" />
+    <echo message="Found Composer: ${composer}" />
+    <echo message="Found NPM: ${npm}" />
+    <echo message="Found rsync: ${rsync}" />
+  </target>
+
+  <!-- Syncs the profile into the Drupal code base. -->
+  <target name="build" depends="env">
+    <!-- Create the destination if it doesn't exist. -->
+    <mkdir dir="${profile}" />
+    <mkdir dir="${profile}/config" />
+    <mkdir dir="${site}" />
+    <chmod file="${site}" mode="0775" />
+    <mkdir dir="config/sync"/>
+
+    <!-- Use the Platform.sh settings.php file for all builds. -->
+    <if>
+      <available file='${site}/settings.php' />
+      <then>
+        <chmod file="${site}/settings.php" mode="0775" />
+      </then>
+      <else>
+        <copy file="${site}/default.settings.php" tofile="${site}/settings.php" overwrite="false"/>
+      </else>
+    </if>
+
+    <!-- Build theme files -->
+		<exec command="npm install" dir="${theme}"/>
+		<exec command="node_modules/gulp/bin/gulp.js build:prod" dir="${theme}"/>
+  </target>
+
+  <!-- Copies files for local dev. -->
+  <target name="lando-build">
+    <copy file="${application.startdir}/dev/settings.local.php" tofile="${site}/settings.local.php" overwrite="false"/>
+    <copy file="${application.startdir}/dev/development.services.yml" tofile="${web}/sites/development.services.yml" overwrite="false"/>
+  </target>
+
+  <!-- Destroys the installed code base. -->
+  <target name="destroy">
+    <delete failonerror="true" includeemptydirs="true">
+      <fileset dir="." defaultexcludes="false">
+        <include name="composer.lock" />
+        <include name="${web}/**" />
+        <include name="vendor/**" />
+        <include name="${theme}/node_modules/**"/>
+      </fileset>
+    </delete>
+  </target>
+</project>

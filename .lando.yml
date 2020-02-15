@@ -34,3 +34,13 @@ tooling:
   phpunit:
     service: appserver
     cmd: vendor/bin/phpunit
+  devel:
+    description: Enable devel systems
+    cmd: true
+    service: appserver
+  update:
+    description: Update Application
+    cmd: true
+    service: appserver
+  node:
+    service: node
