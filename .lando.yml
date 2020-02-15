@@ -42,5 +42,3 @@ tooling:
     description: Update Application
     cmd: true
     service: appserver
-  node:
-    service: node
