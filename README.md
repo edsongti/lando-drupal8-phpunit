@@ -1,6 +1,6 @@
 # lando-drupal8-phpunit
 
-Install Git, Docker and Lando
+Install Git, Docker and Lando (v3.0.0-rc2)
 
 run 
 - mkdir your_project
