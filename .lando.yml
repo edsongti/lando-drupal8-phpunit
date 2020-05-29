@@ -1,8 +1,7 @@
 name: lando-d8-phpunit
 recipe: drupal8
 config:
-  php: '7.2'
-  via: nginx
+  php: '7.3'
   webroot: docroot
   drush: 9
   database: mariadb
@@ -17,14 +16,11 @@ services:
       - "cd $LANDO_MOUNT && ./bin/phing lando-build"
       - "phpcs --config-set installed_paths ~/.composer/vendor/drupal/coder/coder_sniffer"
       - "/app/vendor/squizlabs/php_codesniffer/bin/phpcs --config-set installed_paths /app/vendor/drupal/coder/coder_sniffer"
-    config:
-      http: config/nginx.conf
 
 tooling:
   install:
     description: Install Application
     cmd:
-      - cd $LANDO_WEBROOT && drush sql-drop --yes 
       - cd $LANDO_WEBROOT && drush si --db-url=mysql://drupal8:drupal8@database:3306/drupal8 --locale='en' --site-name='D8 and TDD' --site-mail='admin@example.com' --account-name='admin' --account-mail='admin@example.com' --account-pass='admin' --yes
     service: appserver
   phpcs:
@@ -34,11 +30,3 @@ tooling:
   phpunit:
     service: appserver
     cmd: vendor/bin/phpunit
-  devel:
-    description: Enable devel systems
-    cmd: true
-    service: appserver
-  update:
-    description: Update Application
-    cmd: true
-    service: appserver
