@@ -11,8 +11,8 @@ Install Git, Docker and Lando (v3.0.0-rc2)
 ## How to use
 
 run 
-- mkdir your_project
-- cd your_project
+- git clone git@github.com:edsongti/lando-drupal8-phpunit.git
+- cd lando-drupal8-phpunit
 - lando start
 - lando composer install
 - lando install
