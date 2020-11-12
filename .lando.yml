@@ -4,7 +4,6 @@ config:
   php: '7.3'
   webroot: docroot
   drush: 9
-  database: mariadb
   xdebug: true
   conf:
     php: .vscode/php.ini
